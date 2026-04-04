@@ -1,8 +1,7 @@
 // ── Typed title animation ────────────────────────────────────
 const titles = [
   'CS Student',
-  'Software Engineer',
-  'Full-Stack Developer'
+  'Machine Learning Enthusiast'
 ];
 
 let titleIdx = 0, charIdx = 0, deleting = false;
@@ -36,7 +35,7 @@ const lines = [
   { type: 'cmd',  prompt: '~',    text: 'whoami' },
   { type: 'out',  text: 'Liam Yates — CS student @ <span style="color:var(--yellow)">Purdue</span>' },
   { type: 'cmd',  prompt: '~',    text: 'cat skills.json' },
-  { type: 'json', text: '{ <span class="t-key">"languages"</span>: <span class="t-val">["C","Java","Python", "Javascript"]</span>,\n  <span class="t-key">"focus"</span>: <span class="t-val">"backend + machine learning"</span> }' },
+  { type: 'json', text: '{ <span class="t-key">"languages"</span>: <span class="t-val">["C","Java","Python"]</span>,\n  <span class="t-key">"focus"</span>: <span class="t-val">"backend + machine learning"</span> }' },
  // { type: 'cmd',  prompt: '~',    text: 'git log --oneline -3' },
  // { type: 'out',  text: '<span style="color:var(--yellow)">a1b2c3d</span> feat: ship new feature' },
  // { type: 'out',  text: '<span style="color:var(--yellow)">d4e5f6a</span> fix: resolve edge case' },
