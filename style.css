@@ -224,7 +224,7 @@ section {
   height: 11px;
   border-radius: 50%;
 }
-.dot.red    { background: #f87171; }
+.dot.red    { background: #f87171; cursor: pointer; }
 .dot.yellow { background: #facc15; }
 .dot.green  { background: #4ade80; }
 

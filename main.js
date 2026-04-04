@@ -1,8 +1,7 @@
 // ── Typed title animation ────────────────────────────────────
 const titles = [
   'CS Student',
-  'Software Engineer',
-  'Full-Stack Developer'
+  'Machine Learning Enthusiast'
 ];
 
 let titleIdx = 0, charIdx = 0, deleting = false;
@@ -36,7 +35,7 @@ const lines = [
   { type: 'cmd',  prompt: '~',    text: 'whoami' },
   { type: 'out',  text: 'Liam Yates — CS student @ <span style="color:var(--yellow)">Purdue</span>' },
   { type: 'cmd',  prompt: '~',    text: 'cat skills.json' },
-  { type: 'json', text: '{ <span class="t-key">"languages"</span>: <span class="t-val">["C","Java","Python", "Javascript"]</span>,\n  <span class="t-key">"focus"</span>: <span class="t-val">"backend + machine learning"</span> }' },
+  { type: 'json', text: '{ <span class="t-key">"languages"</span>: <span class="t-val">["C","Java","Python"]</span>,\n  <span class="t-key">"focus"</span>: <span class="t-val">"backend + machine learning"</span> }' },
  // { type: 'cmd',  prompt: '~',    text: 'git log --oneline -3' },
  // { type: 'out',  text: '<span style="color:var(--yellow)">a1b2c3d</span> feat: ship new feature' },
  // { type: 'out',  text: '<span style="color:var(--yellow)">d4e5f6a</span> fix: resolve edge case' },
@@ -75,15 +74,49 @@ async function runTerminal() {
     await renderLine(line);
     await delay(line.type === 'cmd' ? 400 : 180);
   }
-  // blinking cursor at end
-  const cursor = document.createElement('span');
-  cursor.className = 't-cursor';
-  terminal.appendChild(cursor);
+  startInteractivePrompt();
+}
+
+function startInteractivePrompt() {
+  const inputLine = document.createElement('span');
+  inputLine.className = 't-line';
+  inputLine.innerHTML = `<span class="t-prompt">❯</span> <span class="t-cmd t-input-text"></span><span class="t-cursor"></span>`;
+  terminal.appendChild(inputLine);
+  terminal.scrollTop = terminal.scrollHeight;
+
+  const inputText = inputLine.querySelector('.t-input-text');
+
+  function handleKey(e) {
+    if (e.key === 'Enter') {
+      const cmd = inputText.textContent.trim();
+      inputLine.querySelector('.t-cursor').remove();
+      if (cmd) {
+        const out = document.createElement('span');
+        out.className = 't-line';
+        out.innerHTML = `<span class="t-out">command not found: ${cmd}</span>`;
+        terminal.appendChild(out);
+      }
+      document.removeEventListener('keydown', handleKey);
+      startInteractivePrompt();
+    } else if (e.key === 'Backspace') {
+      inputText.textContent = inputText.textContent.slice(0, -1);
+    } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+      inputText.textContent += e.key;
+    }
+    terminal.scrollTop = terminal.scrollHeight;
+  }
+
+  document.addEventListener('keydown', handleKey);
 }
 
 function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 runTerminal();
+
+// ── Terminal close button ────────────────────────────────────
+document.querySelector('.dot.red').addEventListener('click', () => {
+  document.querySelector('.hero-terminal').remove();
+});
 
 // ── Footer year ──────────────────────────────────────────────
 document.getElementById('footer-year').textContent = new Date().getFullYear();
