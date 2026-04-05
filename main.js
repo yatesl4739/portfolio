@@ -1,7 +1,7 @@
 // ── Typed title animation ────────────────────────────────────
 const titles = [
   'CS Student',
-  'Machine Learning Enthusiast'
+  'Machine Learning'
 ];
 
 let titleIdx = 0, charIdx = 0, deleting = false;
